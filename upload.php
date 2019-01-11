@@ -1,8 +1,8 @@
 <?php
 // The user credentials I will use to login to the WebDav host
 $credentials = array(
-	'username',
-	'password'
+	'USERNAME',
+	'PASSWORD'
 );
 // Prepare the file we are going to upload
 
@@ -31,7 +31,7 @@ curl_setopt($ch, CURLOPT_USERPWD, implode(':', $credentials));
 // Define that we are going to upload a file, by setting CURLOPT_PUT we are
 // forced to set CURLOPT_INFILE and CURLOPT_INFILESIZE as well.
 curl_setopt($ch, CURLOPT_PUT, true);
-
+curl_setopt( $ch, CURLOPT_PROGRESSFUNCTION, 'progressCallback' );
 curl_setopt($ch, CURLOPT_INFILE, $fh);
 
 curl_setopt($ch, CURLOPT_INFILESIZE, $filesize);
@@ -52,5 +52,8 @@ curl_exec($ch);
 // End
 fclose($fh);
 
+echo " ";
+echo "Uploading ".$filename." "."to ".$remoteUrl;
+echo " ";
 echo "UPLOAD DONE :) !";
 ?>
